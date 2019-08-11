@@ -14,13 +14,13 @@ substs: [
   "windows.conf"
 ]
 build: [
-  ["./build.sh"]
+  ["/bin/sh" "-e" "./build.sh"]
 ]
 install: [
-  ["./install.sh" "%{prefix}%"]
+  ["/bin/sh" "-e" "./install.sh" "%{prefix}%"]
 ]
 remove: [
-  ["./remove.sh" "%{prefix}%"]
+  ["/bin/sh" "-e" "./remove.sh" "%{prefix}%"]
 ]
 depends: [
   "ocaml" {= "4.07.0"}
