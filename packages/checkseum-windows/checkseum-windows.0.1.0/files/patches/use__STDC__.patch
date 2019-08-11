@@ -1,0 +1,52 @@
+diff --git a/src-c/native/crc32.c b/src-c/native/crc32.c
+index 53f01f5..a62d26c 100644
+--- a/src-c/native/crc32.c
++++ b/src-c/native/crc32.c
+@@ -532,7 +532,7 @@ static unsigned long crc32_big(unsigned long crc, const unsigned char * buf, siz
+     len--;
+   }
+ 
+-  buf4 = (const crc_t *)(cost void *)buf; /* Obj.magic */
++  buf4 = (const crc_t *)(const void *)buf; /* Obj.magic */
+ 
+   while (len >= 32) {
+     DOBIG32;
+diff --git a/src-c/native/crc32.h b/src-c/native/crc32.h
+index 1341212..047c3a7 100644
+--- a/src-c/native/crc32.h
++++ b/src-c/native/crc32.h
+@@ -5,7 +5,7 @@
+ #include "size_t.h"
+ #include "ptrdiff_t.h"
+ 
+-#if !defined(CHECKSEUM_U4) && !defined(CHECKSEUM_SOLO) && defined(STDC)
++#if !defined(CHECKSEUM_U4) && !defined(CHECKSEUM_SOLO) && defined(__STDC__)
+ #  include <limits.h>
+ #  if (UINT_MAX == 0xffffffffUL)
+ #    define CHECKSEUM_U4 unsigned
+diff --git a/src-c/native/ptrdiff_t.h b/src-c/native/ptrdiff_t.h
+index 6a8f10d..ad79e75 100644
+--- a/src-c/native/ptrdiff_t.h
++++ b/src-c/native/ptrdiff_t.h
+@@ -1,7 +1,7 @@
+ #ifndef CHECKSEUM_PTRDIFF_T
+ #define CHECKSEUM_PTRDIFF_T
+ 
+-#if defined(STDC)
++#if defined(__STDC__)
+ #  include <stddef.h>
+ #elif defined(WIN32)
+ #  include <CRTDEFS.H>
+diff --git a/src-c/native/size_t.h b/src-c/native/size_t.h
+index 62589fa..ed95d0b 100644
+--- a/src-c/native/size_t.h
++++ b/src-c/native/size_t.h
+@@ -3,7 +3,7 @@
+ 
+ #if defined(NO_SIZE_T)
+ typedef unsigned NO_SIZE_T size_t;
+-#elif defined(STDC)
++#elif defined(__STDC__)
+ #  include <stddef.h>
+ #elif defined(WIN32)
+ #  include <BaseTsd.h> /* XXX(dinosaure): see checkseum#7 */

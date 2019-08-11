@@ -1,0 +1,47 @@
+opam-version: "2.0"
+name:         "checkseum"
+maintainer:   "pierre.boutillier@laposte.net"
+authors:      [ "Romain Calascibetta <romain.calascibetta@gmail.com>" ]
+homepage:     "https://github.com/dinosaure/checkseum"
+bug-reports:  "https://github.com/dinosaure/checkseum/issues"
+dev-repo:     "git+https://github.com/dinosaure/checkseum.git"
+doc:          "https://dinosaure.github.io/checkseum/"
+license:      "MIT"
+synopsis:     "Adler-32, CRC32 and CRC32-C implementation in C and OCaml"
+description: """
+Checkseum is a library to provide implementation of Adler-32, CRC32 and CRC32-C in C and OCaml.
+
+This library use the linking trick to choose between the C implementation (checkseum.c) or the OCaml implementation (checkseum.ocaml).
+This library is on top of optint to get the best representation of an int32.
+"""
+
+patches: [
+  "patches/use__STDC__.patch"
+]
+
+build: [
+  [ "dune" "subst" ]
+  [ "dune" "build" "-p" "checkseum" "-j" jobs "-x" "windows" ]
+]
+
+depends: [
+  "ocaml-windows"
+  "dune"          {>= "1.9.2"}
+  "optint-windows"
+  "fmt-windows"
+  "rresult-windows"
+  "cmdliner-windows"
+]
+
+extra-files: [
+  [ "patches/use__STDC__.patch" "sha256=d142fb8ae6b5f1de294e7c6ea6fd91f0de3e8c2e141ea7901e0bf2aab8ab592e" ]
+]
+
+url {
+  src:
+    "https://github.com/dinosaure/checkseum/releases/download/v0.1.0/checkseum-v0.1.0.tbz"
+  checksum: [
+    "sha256=0f154f2e0537d524db91771784d4ac26696e718df0120e3bab798f6a38d8ac2d"
+    "sha512=6254f135abd60e62b9eb3e9b65903a546eb2058d14e92a5cc0be94380f2d11da652ab24d2a672f2bca7d509eb19eae6da5bad7deb4ca3b438b8759ae71e3d3b3"
+  ]
+}
