@@ -1,0 +1,41 @@
+opam-version: "2.0"
+maintainer: "pierre.boutillier@laposte.net"
+depends: [
+  "ocaml" {= version}
+  "flexdll-windows"
+  "conf-gcc-windows64"
+  "ocamlfind"
+]
+setenv: [
+  [PATH =+ "%{flexdll-windows:lib}%"]
+]
+build-env: [
+  [PATH =+ "%{flexdll-windows:lib}%"]
+]
+substs: [
+  "windows.conf"
+]
+build: [
+  [ "./configure"
+    "--target=%{conf-gcc-windows64:host}%"
+    "--prefix=%{prefix}%/windows-sysroot"
+    "--without-flexdll"
+    "--without-zstd"
+    "--enable-systhreads"
+    "CC=%{conf-gcc-windows64:prefix}%gcc"
+    "DIRECT_LD=%{conf-gcc-windows64:prefix}%ld"
+  ]
+  [ make "-j%{jobs}%" "crossopt" ]
+]
+install: [
+  [ make "installcross" ]
+]
+synopsis: "OCaml cross-compiler for 64-bit x86 Windows targets"
+
+extra-files: [
+  ["windows.conf.in" "sha256=f56062c6ff2320eb70743c3bd5b4495c1e63dc9ece7ddcb408ce4a47b0eb2b7c"]
+  ["ocaml-windows64.install" "sha256=d55b4e322b06f0124aa6fa209de728e2b3b8786f5569c135b1ec224f04922788"]
+]
+url {
+  src: "https://github.com/shym/ocaml/archive/ocross.tar.gz"
+}
